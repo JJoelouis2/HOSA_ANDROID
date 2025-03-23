@@ -13,7 +13,6 @@ from kivy.clock import Clock
 from kivy.core.window import Window
 from jnius import autoclass, cast
 from android.permissions import request_permissions, check_permission, Permission
-import webbrowser
 
 # Initialize MediaPipe Face Mesh
 mp_face_mesh = mp.solutions.face_mesh
