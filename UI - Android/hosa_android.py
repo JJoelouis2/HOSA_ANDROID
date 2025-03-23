@@ -422,6 +422,9 @@ class HosaUI(FloatLayout):
         if not check_permission(Permission.POST_NOTIFICATIONS):
             request_permissions([Permission.POST_NOTIFICATIONS])
 
+        if not check_permission(Permission.CAMERA):
+            request_permissions([Permission.CAMERA])
+
     def show_android_notification(self):
         """ Sends a clickable Android notification compatible with Android 13+ """
 
