@@ -55,6 +55,10 @@ class HosaUI(FloatLayout):
         self.ear_values = []
         self.mar_values = []
         self.eed_values = []
+        self.yawn_count = 0
+        self.blink_count = 0
+        self.blink_frame_counter = 0
+        self.yawn_frame_counter = 0
 
     def start_calibration(self, event):
         self.clear_widgets()
@@ -234,11 +238,6 @@ class HosaUI(FloatLayout):
 
     def track_frame(self, dt):
         """Continuously update the camera feed and perform calibration."""
-        # Initialize counter frames
-        self.blink_frame_counter = 0
-        self.yawn_frame_counter = 0
-        self.yawn_count = 0
-        self.blink_count = 0
 
         success, frame = self.capture.read()
         if not success:
@@ -356,7 +355,7 @@ class HosaUI(FloatLayout):
         if self.track_results not in self.children:
             self.add_widget(self.track_results)
 
-        if fatigue > fatigue_threshold:
+        if hasattr(self, 'baseline_ear') and fatigue > fatigue_threshold:
             self.show_android_notification()
         
         # Ensure camera is fully released before switching
@@ -370,6 +369,9 @@ class HosaUI(FloatLayout):
         off_image = Image(source  = "HOSA_ON.png", allow_stretch=True, keep_ratio=False, size_hint=(1, 1))
         self.add_widget(off_image)
 
+        self.yawn_count = 0
+        self.blink_count = 0
+        
         # Wait 10 seconds before switching to the tracker
         if not self.is_tracking_active and not self.running:
           
