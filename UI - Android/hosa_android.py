@@ -198,7 +198,7 @@ class HosaUI(FloatLayout):
 
         self.clear_widgets()
         # Recalibration Button
-        self.recalibrate_button = Button(text = 'Recalibrate', size_hint=(None, None), size=(250, 100), 
+        self.recalibrate_button = Button(size_hint=(None, None), size=(250, 100), 
                        pos_hint={'center_x': 0.5, 'center_y': 0.24}, background_normal='',  
                        background_color=(0, 0, 0, 0))
 
@@ -222,7 +222,7 @@ class HosaUI(FloatLayout):
         
         self.stats_tracker = Label(size_hint=(1, None), height=50,
                                  pos_hint={'center_x': 0.5, 'center_y': 0.8}, font_size=20)
-        self.add_widget(self.stats_tracker)
+        #self.add_widget(self.stats_tracker)
         print("Added stats_tracker")
 
         """Start capturing frames from the webcam."""
@@ -352,8 +352,8 @@ class HosaUI(FloatLayout):
         # Properly release the camera before waiting**
         self.running = False
         self.is_tracking_active = False
-        if self.track_results not in self.children:
-            self.add_widget(self.track_results)
+        #if self.track_results not in self.children:
+            #self.add_widget(self.track_results)
 
         if hasattr(self, 'baseline_ear') and fatigue > fatigue_threshold:
             self.show_android_notification()
@@ -366,8 +366,16 @@ class HosaUI(FloatLayout):
         Clock.unschedule(self.record_process)
         
         self.clear_widgets()
-        off_image = Image(source  = "HOSA_ON.png", allow_stretch=True, keep_ratio=False, size_hint=(1, 1))
+        off_image = Image(source  = "HOSA_OFF.png", allow_stretch=True, keep_ratio=False, size_hint=(1, 1))
         self.add_widget(off_image)
+
+        # Recalibration Button
+        self.recalibrate_button2 = Button(size_hint=(None, None), size=(250, 100), 
+                       pos_hint={'center_x': 0.5, 'center_y': 0.24}, background_normal='',  
+                       background_color=(0, 0, 0, 0))
+
+        self.add_widget(self.recalibrate_button2)
+        self.recalibrate_button2.bind(on_press=self.start_calibration)
 
         self.yawn_count = 0
         self.blink_count = 0
